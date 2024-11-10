@@ -4,8 +4,8 @@ public class Parser {
   private byte[] input;
   private int current; 
 
-public Parser (byte[] input) {
-      this.input = input;
+  public Parser (byte[] input) {
+    this.input = input;
   }
 
   public void parse () {
@@ -29,29 +29,46 @@ public Parser (byte[] input) {
   void expr() {
     digit();
     oper();
- }
-
- void digit () {
-  if (Character.isDigit(peek())) {
-      System.out.println("push " + peek());
-      match(peek());
-  } else {
-     throw new Error("syntax error");
   }
+
+  void digit () {
+    if (Character.isDigit(peek())) {
+        System.out.println("push " + peek());
+        match(peek());
+    } else {
+      throw new Error("syntax error");
+    }
   }
 
 	void oper () {
-    if (peek() == '+') {
+    switch (peek()) {
+      case '+' -> {
         match('+');
         digit();
         System.out.println("add");
         oper();
-    } else if (peek() == '-') {
+      }
+      case '-' -> {
         match('-');
         digit();
         System.out.println("sub");
         oper();
-    } 
-}
+      }
+      case '/' -> {
+        match('/');
+        digit();
+        System.out.println("div");
+        oper();
+      }
+      case '*' -> {
+        match('*');
+        digit();
+        System.out.println("mult");
+        oper();
+      }
+      default -> {
+      }
+    }
+  }
 
 }
